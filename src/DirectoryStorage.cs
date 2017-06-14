@@ -44,6 +44,7 @@
         public Task Put(string key, byte[] value)
         {
             string fullPath = GetFullPath(key);
+            Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
             File.WriteAllBytes(fullPath, value);
             return Task.CompletedTask;
         }
