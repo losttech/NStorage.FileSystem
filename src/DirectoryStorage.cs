@@ -21,11 +21,14 @@
             key = KeyEncode(key);
             // encode final directory separator, if any
             char lastChar = key[key.Length - 1];
-            if (Path.DirectorySeparatorChar == lastChar || Path.AltDirectorySeparatorChar == lastChar)
+            if (IsDirectorySeparator(lastChar))
                 key = key.Substring(0, key.Length - 1) + $"%{(byte)lastChar:x2}";
             // TODO: SECURITY: ensure key points within directory
             return Path.Combine(this.directory.FullName, key);
         }
+
+        static bool IsDirectorySeparator(char symbol) =>
+            Path.DirectorySeparatorChar == symbol || Path.AltDirectorySeparatorChar == symbol;
 
         public Task<bool?> Delete(string key)
         {
@@ -70,7 +73,12 @@
         }
 
         static readonly Regex UnsupportedKeyCharRegex = new Regex(
-            $"[{string.Join("", Path.GetInvalidPathChars().Concat(new []{'%'}).Select(c => "\\"+c))}]",
+            $@"[{string.Join("", Path.GetInvalidFileNameChars()
+                                    // allow directory separators to be in path
+                                    .Except(new []{Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar})
+                                    // this is required by encoding
+                                    .Concat(new[] { '%' })
+                                    .Select(c => "\\"+c))}]",
             RegexOptions.Compiled | RegexOptions.CultureInvariant);
         static readonly Regex UnsupportedEscapedKeyCharRegex = new Regex(@"\%[a-f0-9]{2}", RegexOptions.Compiled | RegexOptions.CultureInvariant);
         public static string KeyEncode(string key) =>
