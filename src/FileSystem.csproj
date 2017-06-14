@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.3</TargetFramework>
+    <AssemblyName>LostTech.Storage.FileSystem</AssemblyName>
+    <RootNamespace>LostTech.Storage</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VersionPrefix>0.1.0</VersionPrefix>
+    <Authors>Victor Milovanov</Authors>
+    <Company>Lost Tech LLC</Company>
+    <Product>LostTech.Storage</Product>
+    <Description>Provides file system implementations for LostTech.Storage abstractions</Description>
+    <PackageTags>storage, key-value</PackageTags>
+    <PackageProjectUrl>https://github.com/losttech/NStorage.FileSystem/</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/losttech/NStorage.FileSystem/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/losttech/NStorage.FileSystem.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LostTech.Storage.KeyValue" Version="0.2.1-b2017061301" />
+  </ItemGroup>
+
+</Project>
